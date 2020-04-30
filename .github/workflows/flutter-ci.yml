@@ -6,6 +6,8 @@ on:
   push:
     branches:
     - master
+    tags:
+    - 'v*'
     
 # on: push    # Default will running for every branch.
     
@@ -31,13 +33,13 @@ jobs:
     - run: flutter pub get
     
     # Check for any formatting issues in the code.
-    - run: flutter format --set-exit-if-changed .
+#     - run: flutter format --set-exit-if-changed .
     
     # Statically analyze the Dart code for any errors.
-    - run: flutter analyze .
+#     - run: flutter analyze .
     
     # Run widget tests for our flutter project.
-    - run: flutter test
+#     - run: flutter test
     
     # Build apk.
     - run: flutter build apk
@@ -54,8 +56,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: v1.0.0
-        release_name: v1.0.0 Release of Testing
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
         draft: false
         prerelease: false
     - name: Upload Release Asset
